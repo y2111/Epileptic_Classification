@@ -304,7 +304,17 @@ def hello_world():
         # print(flag)
         if flag==True:
             # print(caseno)
-            return data
+            curr.execute("SELECT column_name FROM information_schema.columns WHERE table_name = 'epilepsydata'")
+            columns=curr.fetchall()
+            for i in range(len(columns)):
+                columns[i]=str(columns[i])
+                columns[i]=columns[i].replace('(', '').replace(')', '').replace("'", '').replace('_',' ').replace(',','')
+
+
+            mapping = dict(zip(list(columns), data[0]))
+            return render_template('home.html', my_dict=mapping)
+            # return mapping
+
         
         columns = list(doctor_ui)
         read_user_data()
@@ -314,7 +324,7 @@ def hello_world():
                     return
     
     
-    return render_template('home.html')
+    return render_template('home.html',my_dict=dict())
     
 
 

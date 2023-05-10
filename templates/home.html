@@ -1,16 +1,58 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <style>
+		body {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+      background-image: url('static/bg.jpeg');
+      padding:40px
+      
+     
+		}
+    .body-wrap{
+      background-color: lightblue;
+      padding:40px
+    }
+  
+   
+	</style>
+  </head>
 <body>
+  
 
-<h2>CaseNo</h2>
 
 
-<form action="{{ url_for("hello_world") }}" method="post">
-  <label for="caseno">CaseNo</label><br>
-  <input type="text" id="caseno" name="caseno"><br><br>
-  <input type="submit" value="Submit">
-</form> 
 
+  <div class="body-wrap">
+    <img src="{{url_for('static', filename='logo.png')}}" align="middle" width="400" height="380"/>
+    <h2>CaseNo</h2>
+    <form action="{{ url_for("hello_world") }}" method="post">
+      <label for="caseno">CaseNo</label><br>
+      <input type="text" id="caseno" name="caseno"><br><br>
+      <input type="submit" value="Submit">
+    </form> 
+
+    <br>
+    <br>
+    <br>
+
+    <table>
+      <tr>
+          <th>Symptoms</th>
+          <th>Patient Exhibit</th>
+      </tr>
+      {% for key, value in my_dict.items() %}
+      <tr>
+          <td>{{ key }}</td>
+          <td>     </td>
+          <td>{{ value }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 
 </body>
 </html>
