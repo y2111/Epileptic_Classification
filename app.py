@@ -29,7 +29,10 @@ from pprint import pprint
 from flask import Flask, render_template
 from flask import request
 
-conn = psycopg2.connect( dbname='epilepsy',host='localhost',user='project',password='Password',port='5432')
+# postgres://xyz:XgD0wCoT3xceevDxhjsUGUf2No51seaS@dpg-chh461e7avjbbjtocq30-a.singapore-postgres.render.com/xyz_6o3t
+
+# conn = psycopg2.connect( dbname='epilepsy',host='localhost',user='project',password='Password',port='5432')
+conn = psycopg2.connect( dbname='xyz_6o3t',host='dpg-chh461e7avjbbjtocq30-a.singapore-postgres.render.com',user='xyz',password='XgD0wCoT3xceevDxhjsUGUf2No51seaS',port='5432')
 curr= conn.cursor()
 table='epilepsydata'
 
@@ -215,7 +218,7 @@ def read_user_data():
         
    
         
-      
+    print("comes here")
     root = Tk()
     root.configure()
     root.title("Symptoms Form")
@@ -229,10 +232,7 @@ def read_user_data():
     row = 0
     run = 0
     for i, column in enumerate(columns):
-        col_name=column
-        col_name=col_name.replace('(', '').replace(')', '').replace("'", '').replace('_',' ').replace(',','')
-        labels.append(Label(root, text=col_name))
-
+        labels.append(Label(root, text=column))
         options = set()
 
         clicked = StringVar()
@@ -250,20 +250,16 @@ def read_user_data():
             if column=='caseno' or column=='patientage':
                 field_entry_boxes.append(Entry(root))
                 field_entry_boxes[i].grid(row=row, column=col+1, ipadx="100")
-
             else:
                 if column=='final_diagnosis':
                     options.add('Uncertain')
                 drop = OptionMenu( root , clicked , *options )
                 field_entry_boxes.append([drop, clicked])
                 field_entry_boxes[i][0].grid(row=row, column=col+1, ipadx="100")
-              
         else:
             field_entry_boxes.append(Entry(root))
             field_entry_boxes[i].grid(row=row, column=col+1, ipadx="100")
-            
         labels[i].grid(row=row, column=col)
-        
         if(col == 0):
             col = 2
         else:
@@ -308,6 +304,7 @@ def hello_world():
         #if caseno exits in db 
 		#flag var
         flag,data=scan_db(caseno)
+        print(caseno)
         # print(flag)
         if flag==True:
             # print(caseno)
@@ -336,7 +333,6 @@ def hello_world():
 
 
 if __name__ == '__main__':
-    
     app.run()
     conn.close()
     curr.close()
