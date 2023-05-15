@@ -229,7 +229,10 @@ def read_user_data():
     row = 0
     run = 0
     for i, column in enumerate(columns):
-        labels.append(Label(root, text=column))
+        col_name=column
+        col_name=col_name.replace('(', '').replace(')', '').replace("'", '').replace('_',' ').replace(',','')
+        labels.append(Label(root, text=col_name))
+
         options = set()
 
         clicked = StringVar()
@@ -247,16 +250,20 @@ def read_user_data():
             if column=='caseno' or column=='patientage':
                 field_entry_boxes.append(Entry(root))
                 field_entry_boxes[i].grid(row=row, column=col+1, ipadx="100")
+
             else:
                 if column=='final_diagnosis':
                     options.add('Uncertain')
                 drop = OptionMenu( root , clicked , *options )
                 field_entry_boxes.append([drop, clicked])
                 field_entry_boxes[i][0].grid(row=row, column=col+1, ipadx="100")
+              
         else:
             field_entry_boxes.append(Entry(root))
             field_entry_boxes[i].grid(row=row, column=col+1, ipadx="100")
+            
         labels[i].grid(row=row, column=col)
+        
         if(col == 0):
             col = 2
         else:
